@@ -2,19 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python",
-      "config": { "zeroConfig": true }
+      "src": "app.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/(favicon.ico|style.css)",
-      "dest": "/templates/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.py"
+      "src": "/.*",
+      "dest": "app.py"
     }
   ]
 }

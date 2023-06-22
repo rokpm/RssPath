@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ feed.name }} | RSS Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ feed.icon }}" alt="{{ feed.name }} icon" width="64" height="64">
+        <h1>{{ feed.name }}</h1>
+    </header>
+    <section>
+        <ul>
+            {% for article in articles %}
+            <li>
+                <h2>{{ article.title }}</h2>
+                <p>Published: {{ article.published.strftime('%Y-%m-%d') }}</p>
+                <p>{{ article.summary[:200] }}{% if article.summary|length > 200 %}...{% endif %}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+</body>
+</html>
