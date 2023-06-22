@@ -1,10 +1,13 @@
 import feedparser
+import os
 from flask import Flask, render_template
 from datetime import datetime
 from urllib.parse import urlparse
 from dateutil.parser import parse
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 rss_urls = [
     'https://www.hecaitou.com/feeds/posts/default',
