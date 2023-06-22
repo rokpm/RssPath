@@ -6,7 +6,21 @@
   <title>RSS Reader</title>
   <style>
     .rss-feed {
+      display: flex;
+      align-items: center;
       margin-bottom: 2rem;
+    }
+    .rss-icon {
+      width: 64px;
+      height: 64px;
+      margin-right: 1rem;
+    }
+    .rss-title {
+      font-size: 18px;
+      margin-bottom: 0.25rem;
+    }
+    .rss-latest-entry {
+      font-size: 14px;
     }
   </style>
 </head>
@@ -14,14 +28,15 @@
   <h1>RSS Reader</h1>
   {% for feed in feeds %}
     <div class="rss-feed">
-      <h2><a href="{{ url_for('rss_detail', feed_name=feed.title) }}">{{ feed.title }}</a></h2>
-      <ul>
-      {% for entry in feed.entries %}
-        <li>
-          <a href="{{ entry.link }}">{{ entry.title }}</a>
-        </li>
-      {% endfor %}
-      </ul>
+      {% if feed.icon %}
+        <img class="rss-icon" src="{{ feed.icon }}" alt="{{ feed.title }} icon">
+      {% endif %}
+      <div>
+        <h2 class="rss-title"><a href="{{ url_for('detail', feed_name=feed.title) }}">{{ feed.title }}</a></h2>
+        <p class="rss-latest-entry">Latest: <a href="{{ feed.entries[0].link }}">{{ feed.latest_entry_title }}</a></p>
+        <p>Updated: {{ feed.latest_entry_published }}</p>
+        <p>Articles in the last 7 days: {{ feed.last_week_count }}</p>
+      </div>
     </div>
   {% endfor %}
 </body>
