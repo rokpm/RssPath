@@ -1,6 +1,7 @@
 import feedparser
 import datetime
 from flask import Flask, render_template
+from urllib.parse import unquote
 
 app = Flask(__name__)
 
@@ -39,6 +40,7 @@ def rss_home():
 
 @app.route('/detail/<feed_name>', endpoint='detail')
 def rss_detail(feed_name):
+    feed_name = unquote(feed_name)  # 解码 feed_name 参数
     feed = None
     feeds_data = get_feeds()
     for f in feeds_data:
