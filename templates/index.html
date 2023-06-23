@@ -4,40 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RSS Reader</title>
-  <style>
-    .rss-feed {
-      display: flex;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-    .rss-icon {
-      width: 64px;
-      height: 64px;
-      margin-right: 1rem;
-    }
-    .rss-title {
-      font-size: 18px;
-      margin-bottom: 0.25rem;
-    }
-    .rss-latest-entry {
-      font-size: 14px;
-    }
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet"> <!-- 引入 Tailwind CSS -->
 </head>
-<body>
-  <h1>RSS Reader</h1>
-  {% for feed in feeds %}
-    <div class="rss-feed">
-      {% if feed.icon %}
-        <img class="rss-icon" src="{{ feed.icon }}" alt="{{ feed.title }} icon">
-      {% endif %}
-      <div>
-        <h2 class="rss-title"><a href="{{ url_for('detail', feed_name=feed.title) }} " target="_blank">{{ feed.title }}</a></h2>
-        <p class="rss-latest-entry">Latest: <a href="{{ feed.entries[0].link }}"target="_blank">{{ feed.latest_entry_title }}</a></p>
-        <p>更新时间: {{ feed.latest_entry_published }}</p>
-        <p>最近7天更新文章数量: {{ feed.last_week_count }}</p>
-      </div>
+<body class="bg-gray-100 font-sans">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8">RSS Reader</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8"> <!-- 添加三列布局 -->
+      {% for feed in feeds %}
+        <div class="flex items-center bg-white p-4 rounded-lg shadow-md">
+          {% if feed.icon %}
+            <img class="w-16 h-16 mr-4" src="{{ feed.icon }}" alt="{{ feed.title }} icon">
+          {% endif %}
+          <div>
+            <h2 class="text-xl font-semibold mb-1">
+              <a href="{{ url_for('detail', feed_name=feed.title) }}" target="_blank" class="text-blue-600 hover:text-blue-800">{{ feed.title }}</a>
+            </h2>
+            <p class="text-sm mb-1">Latest:
+              <a href="{{ feed.entries[0].link }}" target="_blank" class="text-blue-600 hover:text-blue-800">{{ feed.latest_entry_title }}</a>
+            </p>
+            <p class="text-sm">更新时间: {{ feed.latest_entry_published }}</p>
+            <p class="text-sm">最近7天更新文章数量: {{ feed.last_week_count }}</p>
+          </div>
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
+  </div>
 </body>
 </html>
